@@ -8,10 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
+import javax.jws.soap.SOAPBinding;
+
 public class AuthPage extends AbstractPage {
 
     AdditionalMethods methods = new AdditionalMethods();
-
     private static String URL_MATCH = "/main?authDialog=login";
 
 //    private By userMail = By.xpath("//div[contains(@class, 'b-auth-login__email')]//input");
@@ -20,10 +21,17 @@ public class AuthPage extends AbstractPage {
 //    private By loginButtnon = By.xpath("//div[contains(@class,'b-auth-login__enter')]");
 
     /**
-     *  Поле ввода почты
+     *  Поле ввода почты AUTH
      */
     @FindBy(xpath = "//div[contains(@class, 'b-auth-login__email')]//input")
     private WebElement userMail;
+
+    /**
+     * Поле ввода почты REGISTRATION
+     */
+    @FindBy(xpath = "//div[contains(@class, 'registration__email-step')]//input")
+    private WebElement newUserMail;
+
     /**
      *  Поле ввода пароля
      */
@@ -46,6 +54,18 @@ public class AuthPage extends AbstractPage {
     @FindBy(xpath = "//div[@class='b-auth-login__error']")
     private WebElement errorMessage;
 
+    /**
+     * Таб Новый участник
+     */
+    @FindBy(xpath = "//span[text()='Новый участник']")
+    private WebElement newUserTab;
+
+    /**
+     * Кнопка Вступить в клуб
+     */
+    @FindBy(xpath = "//span[text()='Вступить в клуб']")
+    private WebElement newUserButton;
+
 
     public AuthPage(WebDriver driver) {
         super(driver);
@@ -66,6 +86,22 @@ public class AuthPage extends AbstractPage {
         rememberMeCheckbox.click();
         loginButton.click();
         loginButton.click(); // добавил потому что на qa херово работает
+    }
+
+    /**
+     * Регистрация пользователя
+     */
+    private void registrationUser(User user) {
+        newUserMail.sendKeys(user.email);
+        newUserButton.click();
+    }
+
+    /**
+     * Переход на Таб регистрации
+     */
+    public AuthPage goOnRegistrationTab() {
+        newUserTab.click();
+        return this;
     }
 
     /**
@@ -102,5 +138,17 @@ public class AuthPage extends AbstractPage {
         return this;
     }
 
+    /**
+     * Успешная регистраниця  /// сделать чтоб возвращался JournalPage
+     */
+    public void regUserSuccess(User user) {
+        registrationUser(user);
+    }
 
+    /**
+     * Неуспешная регистрация
+     */
+    public void regUserFail(User user) {
+
+    }
 }
