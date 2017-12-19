@@ -1,6 +1,6 @@
 package scripts;
 
-import framework.Helper.AdditionalMethods;
+import framework.Helper.Utils;
 import framework.Helper.User;
 import framework.setup.Setup;
 import org.testng.Assert;
@@ -11,12 +11,10 @@ import pages.ProfilePage;
 
 public class AuthorizationTest extends Setup{
 
-    AdditionalMethods methods = new AdditionalMethods();
-
     @Test
     public void authorizationUserTest() {
         driver.get(Setup.getUrl());
-        methods.wait(1000);
+        Utils.wait(1000);
         User validUser = new User("Rexxar", "rexxar@p33.org", "123qwe");
         User invalidPassUser = new User("Rexxar", "rexxar@p33.org", "123123");
         User invalidMailUser = new User("Rexxar", "123@ggg@ad.ru", "123qwe");
@@ -25,19 +23,17 @@ public class AuthorizationTest extends Setup{
         MainPage mainPage = new MainPage(driver);
         AuthPage authPage = mainPage.clickOnLogin();
 
-        authPage.authUserFail(invalidPassUser)
-                .checkErrorMessage("Неверные данные")
-                .clearEdits()
-                .authUserFail(invalidMailUser)
-                .checkErrorMessage("Неправильный адрес. Возможно, вы не переключили язык или нажали клавишу Caps Lock. Проверьте настройки клавиатуры и введите email еще раз.")
-                .clearEdits()
-                .authUserFail(invalidLengthPassUser)
-                .checkErrorMessage("Пароль меньше 6 символов")
-                .clearEdits().authUserSuccess(validUser);
-                methods.wait(1000);
+        authPage.authUserFail(invalidPassUser);
+        Assert.assertEquals(authPage.getAuthErrorMessage(), "Неверные данные");
+        authPage.clearEdits().authUserFail(invalidMailUser);
+        Assert.assertEquals(authPage.getAuthErrorMessage(), "Неправильный адрес. Возможно, вы не переключили язык или нажали клавишу Caps Lock. Проверьте настройки клавиатуры и введите email еще раз.");
+        authPage.clearEdits().authUserFail(invalidLengthPassUser);
+        Assert.assertEquals(authPage.getAuthErrorMessage(), "Пароль меньше 6 символов");
+        authPage.clearEdits();
+        authPage.authUserSuccess(validUser);
+        Utils.wait(1000);
 
         ProfilePage profilePage = mainPage.clickOnProfile();
         Assert.assertEquals(validUser.email, profilePage.getUserEmail());
     }
-
 }

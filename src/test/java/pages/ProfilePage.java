@@ -1,6 +1,6 @@
 package pages;
 
-import framework.Helper.AdditionalMethods;
+import framework.Helper.Utils;
 import framework.page.AbstractPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,7 +18,6 @@ public class ProfilePage extends AbstractPage {
             );
         }
     }
-
 
     @FindBy(xpath = "//span[@class='b-profile-data__email-value']")
     private WebElement email;
@@ -50,19 +49,19 @@ public class ProfilePage extends AbstractPage {
     }
 
     public ProfilePage isMaleActive() {
-        Assert.assertTrue(AdditionalMethods.elementIsDisplayed(activeMaleButton), "deactive male button");
+        Assert.assertTrue(Utils.elementIsDisplayed(activeMaleButton), "deactive male button");
         return this;
     }
 
     public ProfilePage isFemaleActive() {
-        Assert.assertTrue(AdditionalMethods.elementIsDisplayed(activeFemaleButton), "deactive female button");
+        Assert.assertTrue(Utils.elementIsDisplayed(activeFemaleButton), "deactive female button");
         return this;
     }
 
     public ProfilePage saveChanges() {
         saveButton.click();
-        AdditionalMethods.wait(500);
-        Assert.assertTrue(AdditionalMethods.elementIsDisplayed(changesMessage), "не выводится сообщение о внесенных изменениях");
+        Utils.wait(500);
+        Assert.assertTrue(Utils.elementIsDisplayed(changesMessage), "не выводится сообщение о внесенных изменениях");
         return this;
     }
 

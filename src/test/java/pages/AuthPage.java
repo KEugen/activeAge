@@ -1,18 +1,16 @@
 package pages;
 
-import framework.Helper.AdditionalMethods;
+import com.gargoylesoftware.htmlunit.WebWindow;
+import framework.Helper.Utils;
 import framework.Helper.User;
 import framework.page.AbstractPage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.testng.Assert;
-
-import javax.jws.soap.SOAPBinding;
 
 public class AuthPage extends AbstractPage {
 
-    AdditionalMethods methods = new AdditionalMethods();
     private static String URL_MATCH = "/main?authDialog=login";
 
 //    private By userMail = By.xpath("//div[contains(@class, 'b-auth-login__email')]//input");
@@ -49,10 +47,16 @@ public class AuthPage extends AbstractPage {
     private WebElement loginButton;
 
     /**
-     * Сообщение об ошибке
+     * Сообщение об ошибке AUTH
      */
     @FindBy(xpath = "//div[@class='b-auth-login__error']")
-    private WebElement errorMessage;
+    private WebElement errorMessageAuth;
+
+    /**
+     * Сообщение об ошибке REG
+     */
+    @FindBy(xpath = "//div[@class='b-auth-registration__error']")
+    private WebElement errorMessageReg;
 
     /**
      * Таб Новый участник
@@ -66,6 +70,32 @@ public class AuthPage extends AbstractPage {
     @FindBy(xpath = "//span[text()='Вступить в клуб']")
     private WebElement newUserButton;
 
+    @FindBy(xpath = "//div[contains(@class,'input-password')]//div[contains(@class,'input_age_password')]//input")
+    private WebElement setPassword;
+
+    @FindBy(xpath = "//div[contains(@class,'confirm-password')]//div[contains(@class,'input_age_password')]//input")
+    private WebElement confirmPassword;
+
+    /**
+     *  Условия Публичной оферты
+     */
+    @FindBy(xpath = "//span[@class='b-auth-registration__offer-text']")
+    private WebElement offerText;
+
+    @FindBy(xpath = "//div[contains(@class,'back-to-auth')]")
+    private WebElement backButtonOnOffer;
+
+    /**
+     *  У меня нет такой карты
+     */
+    @FindBy(xpath = "//a[contains(@class,'no-card')]")
+    private WebElement noCardButton;
+
+    /**
+     * Закрыть (крестик) на попапе с картой
+     */
+    @FindBy(xpath = "//div[contains(@class, 'b-auth')]//div[contains(@class,'close g-icon')]")
+    private WebElement closeCardPopup;
 
     public AuthPage(WebDriver driver) {
         super(driver);
@@ -105,11 +135,38 @@ public class AuthPage extends AbstractPage {
     }
 
     /**
-     * Очистить поля почты и пароля
+     * Проверка пользовательского соглашения
+     */
+    public String checkOfferText() {
+        offerText.click();
+        String Url = driver.getCurrentUrl();
+        backButtonOnOffer.click();
+        return Url;
+    }
+
+    /**
+     * Очистить поля почты и пароля а странице авторизации
      */
     public AuthPage clearEdits() {
         userMail.clear();
         userPassword.clear();
+        return this;
+    }
+
+    /**
+     * Очистить поле почты на странице регистрации
+     */
+    public AuthPage clearEmailEdit() {
+        newUserMail.clear();
+        return this;
+    }
+
+    /**
+     * Очистить поля пароля и подтверждения пароля
+     */
+    public AuthPage clearPasswordEdits() {
+        setPassword.clear();
+        confirmPassword.clear();
         return this;
     }
 
@@ -126,16 +183,21 @@ public class AuthPage extends AbstractPage {
      */
     public AuthPage authUserFail(User user) {
         authorizationUser(user);
-        return new AuthPage(driver);
+        return this;
     }
 
     /**
-     * Проверка сообщения об ошибке
+     * Проверка сообщения об ошибке на странице авторизации
      */
-    public AuthPage checkErrorMessage(String expectedMessage) {
-        Assert.assertTrue(errorMessage.isDisplayed(), "Сообщение об ошибке не выводится");
-        Assert.assertTrue(errorMessage.getText().contains(expectedMessage), "Сообщение об ошибке дожно содержать" + expectedMessage);
-        return this;
+    public String getAuthErrorMessage() {
+        return errorMessageAuth.getText();
+    }
+
+    /**
+     * Проверка сообщения об ошибке на странице авторизации
+     */
+    public String getRegErrorMessage() {
+        return errorMessageReg.getText();
     }
 
     /**
@@ -149,6 +211,35 @@ public class AuthPage extends AbstractPage {
      * Неуспешная регистрация
      */
     public void regUserFail(User user) {
+        registrationUser(user);
+        Utils.wait(1000);
+    }
 
+    /**
+     *  успешная Установка Пароля
+     */
+    public MainPage setupPasswordSuccess(User user) {
+        if (!(setPassword.getAttribute("value").length() == 0)) {
+            clearPasswordEdits();
+        }
+        setPassword.sendKeys(user.pass);
+        confirmPassword.sendKeys(user.confirmPass);
+        newUserButton.click();
+        noCardButton.click();
+        closeCardPopup.click();
+        return new MainPage(driver);
+    }
+
+    /**
+     * неуспешная Установка Пароля
+     */
+    public AuthPage setupPasswordFaile(User user) {
+        if (!(setPassword.getAttribute("value").length() == 0)) {
+            clearPasswordEdits();
+        }
+        setPassword.sendKeys(user.pass);
+        confirmPassword.sendKeys(user.confirmPass);
+        newUserButton.click();
+        return this;
     }
 }

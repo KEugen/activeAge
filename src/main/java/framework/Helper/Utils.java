@@ -1,7 +1,6 @@
 package framework.Helper;
 
 import framework.setup.Setup;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
