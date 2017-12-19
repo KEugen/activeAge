@@ -11,7 +11,7 @@ public class RunAllTests extends Setup {
     public static void main(String[] args) throws Exception{
         TestNG testNG = new TestNG();
         List<String> suites = Lists.newArrayList();
-        suites.add("./../TestSuites");
+        suites.add("./TestSuite.xml");
         testNG.setTestSuites(suites);
         testNG.run();
     }
