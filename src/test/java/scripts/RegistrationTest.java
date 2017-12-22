@@ -19,7 +19,7 @@ public class RegistrationTest extends Setup {
         User invalidEmailUser = new User("Reno", "asd3@@@..@", "123qwe");
         User validUser = new User("", Utils.generateRandomEmail(), "123");
 
-        MainPage mainPage = new MainPage(driver);
+        MainPage mainPage = new MainPage();
         AuthPage authPage = mainPage.clickOnLogin();
 
         authPage.goOnRegistrationTab()
@@ -32,11 +32,11 @@ public class RegistrationTest extends Setup {
         authPage.regUserSuccess(validUser);
 
         validUser.confirmPass = "123";
-        authPage.setupPasswordFaile(validUser);
+        authPage.setupPasswordFail(validUser);
         Assert.assertEquals(authPage.getRegErrorMessage(), "Пароль меньше 6 символов");
         validUser.pass = "123qwe";
         validUser.confirmPass = "123123";
-        authPage.setupPasswordFaile(validUser);
+        authPage.setupPasswordFail(validUser);
         Assert.assertEquals(authPage.getRegErrorMessage(), "Пароли не совпадают");
         validUser.pass="123qwe";
         validUser.confirmPass = "123qwe";

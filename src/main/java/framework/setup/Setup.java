@@ -16,6 +16,15 @@ public class Setup {
         return "http://activeage1.qa.lan";
     }
 
+    public static WebDriver getDriver() {
+        if (driver != null) {
+            return driver;
+        }
+        else {
+            throw new IllegalStateException("Driver has not been initialized. ");
+        }
+    }
+
     @BeforeClass
     public static void setupBeforeClass () throws IOException {
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
@@ -26,7 +35,7 @@ public class Setup {
 
     @AfterClass
     public static void teardownAfterClass() throws IOException {
-        //driver.quit();
+        driver.quit();
     }
 
 }

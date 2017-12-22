@@ -20,7 +20,7 @@ public class AuthorizationTest extends Setup{
         User invalidMailUser = new User("Rexxar", "123@ggg@ad.ru", "123qwe");
         User invalidLengthPassUser = new User("Rexxar", "rexxar@p33.org", "123");
 
-        MainPage mainPage = new MainPage(driver);
+        MainPage mainPage = new MainPage();
         AuthPage authPage = mainPage.clickOnLogin();
 
         authPage.authUserFail(invalidPassUser);

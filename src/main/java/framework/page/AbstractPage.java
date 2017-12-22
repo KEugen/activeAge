@@ -4,10 +4,21 @@ import framework.setup.Setup;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-public class AbstractPage extends Setup {
+public abstract class AbstractPage  {
 
-    public AbstractPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+    protected AbstractPage() {
+        PageFactory.initElements(getDriver(), this);
+    }
+
+    protected WebDriver getDriver() {
+        return Setup.getDriver();
+    }
+
+    protected void isCorrectPage(String expectedUrl) {
+        if(!getDriver().getCurrentUrl().contains(expectedUrl)) {
+            throw new IllegalStateException(
+                    "This is not profile page"
+            );
+        }
     }
 }

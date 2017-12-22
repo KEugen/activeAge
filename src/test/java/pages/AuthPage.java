@@ -1,10 +1,8 @@
 package pages;
 
-import com.gargoylesoftware.htmlunit.WebWindow;
 import framework.Helper.Utils;
 import framework.Helper.User;
 import framework.page.AbstractPage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,60 +11,46 @@ public class AuthPage extends AbstractPage {
 
     private static String URL_MATCH = "/main?authDialog=login";
 
+    public AuthPage() {
+        super();
+        // проверяем, что находимся на странице авторизации
+        isCorrectPage(URL_MATCH);
+    }
 //    private By userMail = By.xpath("//div[contains(@class, 'b-auth-login__email')]//input");
 //    private By userPassword = By.xpath("//div[contains(@class, 'b-auth-login__password')]//input");
 //    private By rememberMeCheckbox = By.xpath("c");
 //    private By loginButtnon = By.xpath("//div[contains(@class,'b-auth-login__enter')]");
 
-    /**
-     *  Поле ввода почты AUTH
-     */
+    /* Поле ввода почты AUTH */
     @FindBy(xpath = "//div[contains(@class, 'b-auth-login__email')]//input")
     private WebElement userMail;
 
-    /**
-     * Поле ввода почты REGISTRATION
-     */
+    /* Поле ввода почты REGISTRATION */
     @FindBy(xpath = "//div[contains(@class, 'registration__email-step')]//input")
     private WebElement newUserMail;
-
-    /**
-     *  Поле ввода пароля
-     */
+    /* Поле ввода пароля */
     @FindBy(xpath = "//div[contains(@class, 'b-auth-login__password')]//input")
     private WebElement userPassword;
-    /**
-     * Чекбокс Запомнить
-     */
+    /* Чекбокс Запомнить */
     @FindBy(xpath = "//div[contains(@class, 'b-auth-login__password')]//input")
     private WebElement rememberMeCheckbox;
-    /**
-     * Кнопка Войти
-     */
+    /* Кнопка Войти */
     @FindBy(xpath = "//div[contains(@class,'b-auth-login__enter')]")
     private WebElement loginButton;
 
-    /**
-     * Сообщение об ошибке AUTH
-     */
+    /* Сообщение об ошибке AUTH */
     @FindBy(xpath = "//div[@class='b-auth-login__error']")
     private WebElement errorMessageAuth;
 
-    /**
-     * Сообщение об ошибке REG
-     */
+    /* Сообщение об ошибке REG */
     @FindBy(xpath = "//div[@class='b-auth-registration__error']")
     private WebElement errorMessageReg;
 
-    /**
-     * Таб Новый участник
-     */
+    /* Таб Новый участник */
     @FindBy(xpath = "//span[text()='Новый участник']")
     private WebElement newUserTab;
 
-    /**
-     * Кнопка Вступить в клуб
-     */
+    /* Кнопка Вступить в клуб */
     @FindBy(xpath = "//span[text()='Вступить в клуб']")
     private WebElement newUserButton;
 
@@ -76,40 +60,27 @@ public class AuthPage extends AbstractPage {
     @FindBy(xpath = "//div[contains(@class,'confirm-password')]//div[contains(@class,'input_age_password')]//input")
     private WebElement confirmPassword;
 
-    /**
-     *  Условия Публичной оферты
-     */
+    /* Условия Публичной оферты */
     @FindBy(xpath = "//span[@class='b-auth-registration__offer-text']")
     private WebElement offerText;
 
+    /* Кнопка назад на странице оффера */
     @FindBy(xpath = "//div[contains(@class,'back-to-auth')]")
     private WebElement backButtonOnOffer;
 
-    /**
-     *  У меня нет такой карты
-     */
+    /* У меня нет такой карты */
     @FindBy(xpath = "//a[contains(@class,'no-card')]")
     private WebElement noCardButton;
 
-    /**
-     * Закрыть (крестик) на попапе с картой
-     */
+    /* Закрыть (крестик) на попапе с картой */
     @FindBy(xpath = "//div[contains(@class, 'b-auth')]//div[contains(@class,'close g-icon')]")
     private WebElement closeCardPopup;
 
-    public AuthPage(WebDriver driver) {
-        super(driver);
-        // проверяем, что находимся на странице авторизации
-        if(!driver.getCurrentUrl().contains(URL_MATCH)) {
-            throw new IllegalStateException(
-              "This is not auth page"
-            );
-        }
-    }
+    // / / / / / /
+    // М Е Т О Д Ы
+    // / / / / / / / / /
 
-    /**
-     * Авторизация пользователя
-     */
+    /* Авторизация пользователя */
     private void authorizationUser(User user) {
         userMail.sendKeys(user.email);
         userPassword.sendKeys(user.pass);
@@ -118,106 +89,80 @@ public class AuthPage extends AbstractPage {
         loginButton.click(); // добавил потому что на qa херово работает
     }
 
-    /**
-     * Регистрация пользователя
-     */
+    /* Регистрация пользователя */
     private void registrationUser(User user) {
         newUserMail.sendKeys(user.email);
         newUserButton.click();
     }
 
-    /**
-     * Переход на Таб регистрации
-     */
+    /* Переход на Таб регистрации */
     public AuthPage goOnRegistrationTab() {
         newUserTab.click();
         return this;
     }
 
-    /**
-     * Проверка пользовательского соглашения
-     */
+    /* Проверка пользовательского соглашения */
     public String checkOfferText() {
         offerText.click();
-        String Url = driver.getCurrentUrl();
+        String Url = getDriver().getCurrentUrl();
         backButtonOnOffer.click();
         return Url;
     }
 
-    /**
-     * Очистить поля почты и пароля а странице авторизации
-     */
+    /* Очистить поля почты и пароля а странице авторизации */
     public AuthPage clearEdits() {
         userMail.clear();
         userPassword.clear();
         return this;
     }
 
-    /**
-     * Очистить поле почты на странице регистрации
-     */
+    /* Очистить поле почты на странице регистрации */
     public AuthPage clearEmailEdit() {
         newUserMail.clear();
         return this;
     }
 
-    /**
-     * Очистить поля пароля и подтверждения пароля
-     */
+    /* Очистить поля пароля и подтверждения пароля */
     public AuthPage clearPasswordEdits() {
         setPassword.clear();
         confirmPassword.clear();
         return this;
     }
 
-    /**
-     * Успешная авторизация
-     */
+    /* УСПЕШНАЯ авторизация */
     public MainPage authUserSuccess(User user) {
         authorizationUser(user);
-        return new MainPage(driver);
+        return new MainPage();
     }
 
-    /**
-     * Неуспешная авторизация
-     */
+    /* НЕУСПЕШНАЯ авторизация */
     public AuthPage authUserFail(User user) {
         authorizationUser(user);
         return this;
     }
 
-    /**
-     * Проверка сообщения об ошибке на странице авторизации
-     */
+    /* Проверка сообщения об ошибке на странице авторизации */
     public String getAuthErrorMessage() {
         return errorMessageAuth.getText();
     }
 
-    /**
-     * Проверка сообщения об ошибке на странице авторизации
-     */
+    /* Проверка сообщения об ошибке на странице авторизации */
     public String getRegErrorMessage() {
         return errorMessageReg.getText();
     }
 
-    /**
-     * Успешная регистраниця  /// сделать чтоб возвращался JournalPage
-     */
+    /* Успешная регистраниця  /// сделать чтоб возвращался JournalPage */
     public void regUserSuccess(User user) {
         registrationUser(user);
     }
 
-    /**
-     * Неуспешная регистрация
-     */
+    /* Неуспешная регистрация */
     public void regUserFail(User user) {
         registrationUser(user);
         Utils.wait(1000);
     }
 
-    /**
-     *  успешная Установка Пароля
-     */
+    /* УСПЕШНАЯ Установка Пароля */
     public MainPage setupPasswordSuccess(User user) {
         if (!(setPassword.getAttribute("value").length() == 0)) {
             clearPasswordEdits();
@@ -227,13 +172,11 @@ public class AuthPage extends AbstractPage {
         newUserButton.click();
         noCardButton.click();
         closeCardPopup.click();
-        return new MainPage(driver);
+        return new MainPage();
     }
 
-    /**
-     * неуспешная Установка Пароля
-     */
-    public AuthPage setupPasswordFaile(User user) {
+    /* НЕУСПЕШНАЯ Установка Пароля */
+    public AuthPage setupPasswordFail(User user) {
         if (!(setPassword.getAttribute("value").length() == 0)) {
             clearPasswordEdits();
         }

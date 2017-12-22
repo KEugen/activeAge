@@ -5,6 +5,7 @@ public class User {
     public String name;
     public String email;
     public String pass;
+    public String confirmPass;
 
     public User(String name, String email, String pass) {
         this.name = name;
