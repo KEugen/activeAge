@@ -7,9 +7,25 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.Set;
 
 public class Utils extends Setup {
+
+    // Метод, открывающий i-ю ссылку списка в новой вкладке, после чего закрывющий ее
+    public static String openNewTabAndGetTitle(int num, List<WebElement> list) {
+        String title;
+        String parentWindowId = getDriver().getWindowHandle();
+        final Set<String> oldWindowsSet = getDriver().getWindowHandles();
+
+        list.get(num).click();
+
+        moveFocusToTheNewWindow(oldWindowsSet);
+        title = getDriver().getTitle();
+        getDriver().close();
+        getDriver().switchTo().window(parentWindowId);
+        return title;
+    }
 
     // Метод, который ждет millis миллисекунд
     public static void wait(int millis) {
@@ -19,7 +35,6 @@ public class Utils extends Setup {
             e.printStackTrace();
         }
     }
-
 
     // Метод, генерирующий рандомный имейл, привязанный к темп-мэил
     public static String generateRandomEmail(){
@@ -72,5 +87,4 @@ public class Utils extends Setup {
             return false;
         }
     }
-
 }

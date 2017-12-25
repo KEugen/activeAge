@@ -9,6 +9,14 @@ public class MainPage extends AbstractPage{
 
     private static String URL_MATCH = "/main";
 
+    /* Лого в левом верхнем углу  ???????*/
+    @FindBy(xpath = "//div[@class='b-header__inner-desktop']//a[@class='b-header__logo-icon']")
+    private WebElement logo;
+
+    /* !!!!  Кнопка Перейти после теста */
+    @FindBy(xpath = "")
+    private WebElement df;
+
     /* Кнопка Пройти тест или ЕЩЕ РАЗ */
     @FindBy(xpath = "//a[@class='b-quiz-header__go-button']")
     private WebElement goQuizButton;
@@ -48,6 +56,20 @@ public class MainPage extends AbstractPage{
 
     public String getQuizButtonText() {
         return goQuizButton.getText();
+    }
+
+    public QuizPage clickOnGoQuiz() {
+        goQuizButton.click();
+        return new QuizPage();
+    }
+
+
+
+
+
+    public MainPage clickOnLogo() {
+        logo.click();
+        return this;
     }
 
     public ProfilePage clickOnProfile() {

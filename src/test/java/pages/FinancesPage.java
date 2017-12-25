@@ -96,8 +96,8 @@ public class FinancesPage extends AbstractPage {
     @FindBy(xpath = "//div[contains(@class,'ok_around')]")
     private static WebElement OKLink;
 
-    ArrayList<WebElement> listOnSaveTab = new ArrayList<WebElement>();
-    ArrayList<WebElement> listOnAddTab = new ArrayList<WebElement>();
+    ArrayList<WebElement> listOnSaveTab = new ArrayList<>();
+    ArrayList<WebElement> listOnAddTab = new ArrayList<>();
     /**
      *
      * М Е Т О Д Ы

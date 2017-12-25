@@ -17,7 +17,7 @@ public abstract class AbstractPage  {
     protected void isCorrectPage(String expectedUrl) {
         if(!getDriver().getCurrentUrl().contains(expectedUrl)) {
             throw new IllegalStateException(
-                    "This is not profile page"
+                    "This is not" + expectedUrl+ "page"
             );
         }
     }

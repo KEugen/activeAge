@@ -31,17 +31,17 @@ public class RegistrationTest extends Setup {
         Assert.assertEquals(authPage.checkOfferText(), "http://activeage1.qa.lan/user-agreement");
         authPage.regUserSuccess(validUser);
 
-        validUser.confirmPass = "123";
+        validUser.setConfirmPass("123");
         authPage.setupPasswordFail(validUser);
         Assert.assertEquals(authPage.getRegErrorMessage(), "Пароль меньше 6 символов");
-        validUser.pass = "123qwe";
-        validUser.confirmPass = "123123";
+        validUser.setPass("123qwe");
+        validUser.setConfirmPass("123123");
         authPage.setupPasswordFail(validUser);
         Assert.assertEquals(authPage.getRegErrorMessage(), "Пароли не совпадают");
-        validUser.pass="123qwe";
-        validUser.confirmPass = "123qwe";
+        validUser.setPass("123qwe");
+        validUser.setConfirmPass("123qwe");
 
         ProfilePage profilePage = authPage.setupPasswordSuccess(validUser).clickOnProfile();
-        Assert.assertEquals(profilePage.getUserEmail(), validUser.email);
+        Assert.assertEquals(profilePage.getUserEmail(), validUser.getEmail());
     }
 }

@@ -4,6 +4,8 @@
         <classes>
             <class name="scripts.AuthorizationTest"/>
             <class name="scripts.RegistrationTest"/>
+            <class name="scripts.FinancesTest"/>
+            <class name="scripts.FooterTest"/>
         </classes>
     </test>
 </suite>

@@ -34,6 +34,6 @@ public class AuthorizationTest extends Setup{
         Utils.wait(1000);
 
         ProfilePage profilePage = mainPage.clickOnProfile();
-        Assert.assertEquals(validUser.email, profilePage.getUserEmail());
+        Assert.assertEquals(validUser.getEmail(), profilePage.getUserEmail());
     }
 }

@@ -82,8 +82,8 @@ public class AuthPage extends AbstractPage {
 
     /* Авторизация пользователя */
     private void authorizationUser(User user) {
-        userMail.sendKeys(user.email);
-        userPassword.sendKeys(user.pass);
+        userMail.sendKeys(user.getEmail());
+        userPassword.sendKeys(user.getPass());
         rememberMeCheckbox.click();
         loginButton.click();
         loginButton.click(); // добавил потому что на qa херово работает
@@ -91,7 +91,7 @@ public class AuthPage extends AbstractPage {
 
     /* Регистрация пользователя */
     private void registrationUser(User user) {
-        newUserMail.sendKeys(user.email);
+        newUserMail.sendKeys(user.getEmail());
         newUserButton.click();
     }
 
@@ -167,8 +167,8 @@ public class AuthPage extends AbstractPage {
         if (!(setPassword.getAttribute("value").length() == 0)) {
             clearPasswordEdits();
         }
-        setPassword.sendKeys(user.pass);
-        confirmPassword.sendKeys(user.confirmPass);
+        setPassword.sendKeys(user.getPass());
+        confirmPassword.sendKeys(user.getConfirmPass());
         newUserButton.click();
         noCardButton.click();
         closeCardPopup.click();
@@ -180,8 +180,8 @@ public class AuthPage extends AbstractPage {
         if (!(setPassword.getAttribute("value").length() == 0)) {
             clearPasswordEdits();
         }
-        setPassword.sendKeys(user.pass);
-        confirmPassword.sendKeys(user.confirmPass);
+        setPassword.sendKeys(user.getPass());
+        confirmPassword.sendKeys(user.getConfirmPass());
         newUserButton.click();
         return this;
     }
