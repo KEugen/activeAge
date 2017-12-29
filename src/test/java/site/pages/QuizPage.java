@@ -1,4 +1,4 @@
-package pages;
+package site.pages;
 
 import framework.Helper.Utils;
 import framework.page.AbstractPage;
@@ -14,6 +14,10 @@ public class QuizPage extends AbstractPage {
     /* Прогресс бар */
     @FindBy(xpath = "//div[contains(@class,'bar__lane')]/div")
     private WebElement progressBar;
+
+    //* Progress Counter */
+    @FindBy(xpath = "//div[contains(@class,'pensioner-test-bar__counter_size_x')]")
+    private WebElement progressCounter;
 
     /* Чекбокс варианта Ответа (всегда первый вариант) */
     @FindBy(xpath = "//div[@class ='g-checkbox-group__checkbox'][1]")
@@ -43,6 +47,12 @@ public class QuizPage extends AbstractPage {
     public int getProgress() {
         String progress = progressBar.getAttribute("style").replaceAll("[^0-9]", "");
         return Integer.parseInt(progress);
+    }
+
+    public int getProgressCount() {
+        String counter = progressCounter.getText();
+        String count = counter.substring(0, counter.length() - 2).replaceAll("[^0-9]", "");
+        return Integer.parseInt(count);
     }
 
     public void clickOnAnswer() {

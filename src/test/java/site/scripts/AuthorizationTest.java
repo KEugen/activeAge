@@ -1,13 +1,13 @@
-package scripts;
+package site.scripts;
 
 import framework.Helper.Utils;
 import framework.Helper.User;
 import framework.setup.Setup;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.AuthPage;
-import pages.MainPage;
-import pages.ProfilePage;
+import site.pages.AuthPage;
+import site.pages.MainPage;
+import site.pages.ProfilePage;
 
 public class AuthorizationTest extends Setup{
 

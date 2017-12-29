@@ -27,6 +27,21 @@ public class Utils extends Setup {
         return title;
     }
 
+    // Метод, открывающий i-ю ссылку списка в новой вкладке, после чего закрывющий ее
+    public static String openNewTabAndGetUrl(int num, List<WebElement> list) {
+        String url;
+        String parentWindowId = getDriver().getWindowHandle();
+        final Set<String> oldWindowsSet = getDriver().getWindowHandles();
+
+        list.get(num).click();
+
+        moveFocusToTheNewWindow(oldWindowsSet);
+        url = getDriver().getCurrentUrl();
+        getDriver().close();
+        getDriver().switchTo().window(parentWindowId);
+        return url;
+    }
+
     // Метод, который ждет millis миллисекунд
     public static void wait(int millis) {
         try {

@@ -1,4 +1,4 @@
-package pages;
+package site.pages;
 
 import framework.Helper.Utils;
 import framework.page.AbstractPage;
@@ -104,4 +104,7 @@ public class MainPage extends AbstractPage{
 
         return flag;
     }
+
+    
+
 }

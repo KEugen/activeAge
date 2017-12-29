@@ -1,4 +1,4 @@
-package scripts;
+package site.scripts;
 
 import framework.setup.Setup;
 import org.testng.TestNG;

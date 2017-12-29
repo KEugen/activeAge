@@ -1,13 +1,13 @@
-package scripts;
+package site.scripts;
 
 import framework.Helper.Utils;
 import framework.Helper.User;
 import framework.setup.Setup;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.AuthPage;
-import pages.MainPage;
-import pages.ProfilePage;
+import site.pages.AuthPage;
+import site.pages.MainPage;
+import site.pages.ProfilePage;
 
 public class RegistrationTest extends Setup {
 
@@ -22,8 +22,7 @@ public class RegistrationTest extends Setup {
         MainPage mainPage = new MainPage();
         AuthPage authPage = mainPage.clickOnLogin();
 
-        authPage.goOnRegistrationTab()
-                .regUserFail(alreadyExistUser);
+        authPage.goOnRegistrationTab().regUserFail(alreadyExistUser);
         Assert.assertEquals(authPage.getRegErrorMessage(), "Пользователь уже существует");
         authPage.clearEmailEdit()
                 .regUserFail(invalidEmailUser);

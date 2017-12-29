@@ -1,8 +1,7 @@
-package pages;
+package site.pages;
 
 import framework.Helper.Utils;
 import framework.page.AbstractPage;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -61,7 +60,7 @@ public class FinancesPage extends AbstractPage {
     private static WebElement saveOnlineButton;
     /*Сохраняй*/
     @FindBy(xpath = "//span[text()='Сохраняй']")
-    private static WebElement saveButton;
+    private  WebElement saveButton;
     /*Пополняй Онлайн*/
     @FindBy(xpath = "//span[text()='Пополняй онлайн']")
     private static WebElement addOnlineButton;

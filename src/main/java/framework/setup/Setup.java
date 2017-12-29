@@ -16,6 +16,10 @@ public class Setup {
         return "http://activeage1.qa.lan";
     }
 
+    public static String getAdminUrl() {
+        return "http://admin.activeage1.qa.lan/journal/article";
+    }
+
     public static WebDriver getDriver() {
         if (driver != null) {
             return driver;
@@ -35,7 +39,7 @@ public class Setup {
 
     @AfterClass
     public static void teardownAfterClass() throws IOException {
-        driver.quit();
+       // driver.quit();
     }
 
 }

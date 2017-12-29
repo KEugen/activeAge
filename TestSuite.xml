@@ -2,10 +2,11 @@
 <suite name="AllTests" verbose="10">
     <test name="SiteTests">
         <classes>
-            <class name="scripts.AuthorizationTest"/>
-            <class name="scripts.RegistrationTest"/>
-            <class name="scripts.FinancesTest"/>
-            <class name="scripts.FooterTest"/>
+            <class name="site.scripts.AuthorizationTest"/>
+            <class name="site.scripts.RegistrationTest"/>
+            <class name="site.scripts.FinancesTest"/>
+            <class name="site.scripts.FooterTest"/>
+            <class name="site.scripts.QuizTest"/>
         </classes>
     </test>
 </suite>

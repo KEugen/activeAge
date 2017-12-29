@@ -1,11 +1,11 @@
-package scripts;
+package site.scripts;
 
 import framework.Helper.Utils;
 import framework.setup.Setup;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.FinancesPage;
-import pages.MainPage;
+import site.pages.FinancesPage;
+import site.pages.MainPage;
 
 import java.util.ArrayList;
 
