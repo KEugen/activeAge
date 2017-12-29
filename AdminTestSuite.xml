@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="AllTests" verbose="10">
+    <test name="AdminTests">
+        <classes>
+            <class name="admin.scripts.CreateArticleTest"/>
+        </classes>
+    </test>
+</suite>

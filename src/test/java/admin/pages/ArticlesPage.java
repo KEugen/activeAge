@@ -1,5 +1,6 @@
 package admin.pages;
 
+import framework.Helper.Utils;
 import framework.page.AbstractPage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -67,6 +68,7 @@ public class ArticlesPage extends AbstractPage {
 
     public ArticlesPage changeShowsCounter(int count) {
         showDropdown.click();
+        Utils.wait(500);
         elementsOfDropdown.get(count).click();
         return this;
     }
